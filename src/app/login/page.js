@@ -1,7 +1,17 @@
 "use client";
 import Link from "next/link";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "../../firebase"; // Ensure correct import
 
 export default function LoginPage() {
+    const handleGoogleSignIn = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+        } catch (error) {
+            console.error("Google Sign-In Error:", error);
+        }
+    };
+
     return (
         <div>
             {/* Header */}
@@ -29,9 +39,9 @@ export default function LoginPage() {
 
                     <p><Link href="#">Forgot password?</Link></p>
 
+                    {/* Google Login Button */}
                     <div className="social-login">
-                        <button className="google-login">
-                            {/* Google SVG */}
+                        <button className="google-login" onClick={handleGoogleSignIn}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="-380.2 274.7 65.7 65.8" width="20" height="20">
                                 <circle cx="-347.3" cy="307.6" r="32.9" fill="#e0e0e0"></circle>
                                 <circle cx="-347.3" cy="307.1" r="32.4" fill="#fff"></circle>
@@ -46,9 +56,9 @@ export default function LoginPage() {
                         </button>
                     </div>
 
+                    {/* Facebook Login Button (non-functional for now) */}
                     <div className="social-login">
                         <button className="facebook-login">
-                            {/* Facebook SVG */}
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                 <circle cx="12" cy="12" r="12" fill="#1877F2"></circle>
                                 <path fill="#fff" d="M15.1 12.4h-2.1v7.3h-3.2v-7.3H8.3V9.7h1.5V8.3c0-1.3.6-3.3 3.3-3.3h2.4v2.7h-1.7c-.3 0-.7.2-.7.8v1.2h2.4l-.4 2.7z"></path>
