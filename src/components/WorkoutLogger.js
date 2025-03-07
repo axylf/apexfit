@@ -147,10 +147,10 @@ export default function WorkoutLogger() {
 
             {/* Workout Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-2 mt-4">
-                <input type="number" min="1" placeholder="Sets" value={sets} onChange={(e) => setSets(e.target.value)} className="border p-2 rounded" required />
-                <input type="number" min="1" placeholder="Reps per set" value={reps} onChange={(e) => setReps(e.target.value)} className="border p-2 rounded" required />
-                <input type="number" min="1" placeholder="Weight (lbs)" value={weight} onChange={(e) => setWeight(e.target.value)} className="border p-2 rounded" />
-                <input type="number" min="1" placeholder="Rest Time (seconds)" value={rest} onChange={(e) => setRest(e.target.value)} className="border p-2 rounded" />
+                <input type="number" placeholder="Sets" value={sets} onChange={(e) => setSets(e.target.value)} className="border p-2 rounded" required />
+                <input type="number" placeholder="Reps per set" value={reps} onChange={(e) => setReps(e.target.value)} className="border p-2 rounded" required />
+                <input type="number" placeholder="Weight (lbs)" value={weight} onChange={(e) => setWeight(e.target.value)} className="border p-2 rounded" />
+                <input type="number" placeholder="Rest Time (seconds)" value={rest} onChange={(e) => setRest(e.target.value)} className="border p-2 rounded" />
                 <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">Save Workout</button>
             </form>
         </div>
