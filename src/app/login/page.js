@@ -1,14 +1,18 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase"; // Ensure correct import
 
 export default function LoginPage() {
+    const router = useRouter();
+
     const handleGoogleSignIn = async () => {
         try {
             await signInWithPopup(auth, provider);
+            router.push("/dashboard");
         } catch (error) {
             console.error("Google Sign-In Error:", error);
         }
