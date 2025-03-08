@@ -1,8 +1,8 @@
 import "../styles/global.css"; // Loads Global Styles
 
 export const metadata = {
-    title: "TundraFit",
-    description: "A fitness tracker to log workouts and exercises.",
+    title: "ApexFit",
+    description: "An all-in-one fitness and wellness tracker to log meals, workouts, and exercises.",
 };
 
 export default function RootLayout({ children }) {
