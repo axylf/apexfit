@@ -271,3 +271,131 @@ footer ul li a {
 footer ul li a:hover {
     text-decoration: underline;
 }
+
+.exercise-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.exercise-search {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Loading Text */
+.loading-text {
+    color: gray;
+    margin-top: 10px;
+}
+
+.exercise-dropdown-container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+/* Individual Exercise Item */
+.exercise-dropdown {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.exercise-dropdown:hover {
+    background: #f3f4f6; /* Light Gray*/
+}
+
+.exercise-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+/* Exercise Name & Body Part */
+.exercise-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.exercise-name {
+    font-weight: bold;
+    color: black;
+}
+
+.exercise-bodypart {
+    color: gray;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+/* Routine Page Container */
+.routine-container {
+    padding: 20px;
+}
+
+.routine-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.selected-exercises {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.exercise-card {
+    display: flex;
+    align-items: center;
+    background: #f3f3f3;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    max-width: 500px;
+}
+
+.exercise-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.exercise-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.save-routine-btn {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.save-routine-btn:hover {
+    background-color: #003d7a;
+}

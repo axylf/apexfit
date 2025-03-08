@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { logout } from "../utils/auth";
 import { useRouter } from "next/navigation";
@@ -38,7 +39,7 @@ export default function NavBar() {
     return (
         <header>
             <div className="logo-container">
-                <img src="apexfitlogo.svg" />
+                <Image src="/apexfitlogo.svg" alt="ApexFit Logo" width={100} height={100} />
             </div>
             <div className="auth-links">
                 {isLoggedIn ? (

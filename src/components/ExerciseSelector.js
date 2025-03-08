@@ -1,22 +1,21 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export default function ExerciseSelector({ onSave }) {
+export default function ExerciseSelector({ onSelectExercise }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [exercises, setExercises] = useState([]);
-    const [selectedExercises, setSelectedExercises] = useState([]); // Stores added exercises
     const [loading, setLoading] = useState(false);
-    const API_KEY = process.env.NEXT_PUBLIC_RAPIDAPI_KEY;
 
-    // Fetch exercises when user types
+    const API_KEY = process.env.NEXT_PUBLIC_RAPIDAPI_KEY; // Securely load API key
+
     useEffect(() => {
         if (searchTerm.length < 3) {
-            setExercises([]);
+            setExercises([]); // Clear list if input is too short
             return;
         }
 
         const timeoutId = setTimeout(() => {
-            searchExercises(searchTerm);
+            searchExercises(searchTerm.toLowerCase());
         }, 500);
 
         return () => clearTimeout(timeoutId);
@@ -25,18 +24,27 @@ export default function ExerciseSelector({ onSave }) {
     const searchExercises = async (query) => {
         setLoading(true);
         try {
-            const response = await fetch(`https://exercisedb.p.rapidapi.com/exercises?limit=10`, {
-                method: "GET",
-                headers: {
-                    "X-RapidAPI-Key": API_KEY,
-                    "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-                },
-            });
+            console.log("Fetching exercises for:", query);
+            const response = await fetch(
+                "https://exercisedb.p.rapidapi.com/exercises?limit=1000",
+                {
+                    method: "GET",
+                    headers: {
+                        "X-RapidAPI-Key": API_KEY,
+                        "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+                    },
+                }
+            );
 
-            if (!response.ok) throw new Error(`API Error: ${response.status}`);
+            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
 
             const data = await response.json();
-            setExercises(data.filter(ex => ex.name.toLowerCase().includes(query.toLowerCase())));
+            const cleanedQuery = query.toLowerCase().replace(/\s+/g, "");
+            const filteredExercises = data.filter(({ name }) =>
+                name.toLowerCase().replace(/\s+/g, "").includes(cleanedQuery)
+            );
+
+            setExercises(filteredExercises.slice(0, 5)); // Show top 5 results
         } catch (error) {
             console.error("Error fetching exercises:", error);
         } finally {
@@ -44,114 +52,47 @@ export default function ExerciseSelector({ onSave }) {
         }
     };
 
-    // When user selects an exercise, show input fields for sets/reps/weight
-    const handleSelectExercise = (exercise) => {
-        setSelectedExercises([...selectedExercises, { ...exercise, sets: 3, reps: 10, weight: 0 }]);
-        setSearchTerm(""); // Reset search
-        setExercises([]);
-    };
-
-    // Handle input changes for sets, reps, weight
-    const updateExerciseField = (index, field, value) => {
-        const updatedExercises = [...selectedExercises];
-        updatedExercises[index][field] = value;
-        setSelectedExercises(updatedExercises);
-    };
-
-    // When user presses "Save Routine"
-    const handleSaveRoutine = () => {
-        if (selectedExercises.length === 0) {
-            alert("Please add at least one exercise.");
-            return;
-        }
-
-        onSave(selectedExercises); // Pass the data to the parent component
-        setSelectedExercises([]); // Clear the form after saving
-    };
-
     return (
-        <div className="p-4 bg-white rounded shadow-md w-full max-w-md">
-            <h2 className="text-xl font-bold mb-4">Add Exercises</h2>
+        <div className="exercise-selector">
+            <h2>Search for an Exercise</h2>
 
-            {/* Exercise Search Box */}
+            {/* Search Input */}
             <input
                 type="text"
                 placeholder="Search for an exercise..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="border p-2 rounded w-full mb-4"
+                onBlur={() => setTimeout(() => setExercises([]), 200)}
+                className="exercise-search"
             />
 
-            {loading && <p>Loading...</p>}
+            {loading && <p className="loading-text">Loading...</p>}
 
-            {/* Search Results */}
+            {/* Exercise List */}
             {exercises.length > 0 && (
-                <ul className="border rounded p-2 max-h-40 overflow-y-auto">
+                <div className="exercise-dropdown-container">
                     {exercises.map((exercise, index) => (
-                        <li
+                        <div
                             key={index}
-                            className="p-2 border-b cursor-pointer hover:bg-gray-200"
-                            onClick={() => handleSelectExercise(exercise)}
+                            className="exercise-dropdown"
+                            onClick={() => onSelectExercise(exercise)}
                         >
-                            {exercise.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
+                            {/* Image (Check for static image, otherwise use GIF) */}
+                            <img
+                                src={exercise.image || exercise.gifUrl}
+                                alt={exercise.name}
+                                className="exercise-image"
+                            />
 
-            {/* List of Selected Exercises with Input Fields */}
-            {selectedExercises.length > 0 && (
-                <div className="mt-4">
-                    {selectedExercises.map((exercise, index) => (
-                        <div key={index} className="p-2 border rounded mb-2">
-                            <p className="font-bold">{exercise.name}</p>
-
-                            <div className="flex space-x-2">
-                                <input
-                                    type="number"
-                                    value={exercise.sets}
-                                    min="1"
-                                    onChange={(e) => updateExerciseField(index, "sets", e.target.value)}
-                                    className="border p-2 rounded w-1/3"
-                                    placeholder="Sets"
-                                />
-                                <input
-                                    type="number"
-                                    value={exercise.reps}
-                                    min="1"
-                                    onChange={(e) => updateExerciseField(index, "reps", e.target.value)}
-                                    className="border p-2 rounded w-1/3"
-                                    placeholder="Reps"
-                                />
-                                <input
-                                    type="number"
-                                    value={exercise.weight}
-                                    min="0"
-                                    onChange={(e) => updateExerciseField(index, "weight", e.target.value)}
-                                    className="border p-2 rounded w-1/3"
-                                    placeholder="Weight"
-                                />
+                            {/* Exercise Details */}
+                            <div className="exercise-details">
+                                <span className="exercise-name">{exercise.name}</span>
+                                <span className="exercise-bodypart">{exercise.bodyPart}</span>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
-
-            {/* "Add Another Exercise" Button */}
-            <button
-                onClick={() => setSearchTerm("")}
-                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-            >
-                + Add Another Exercise
-            </button>
-
-            {/* Save Routine Button */}
-            <button
-                onClick={handleSaveRoutine}
-                className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-            >
-                Save Routine
-            </button>
         </div>
     );
 }
