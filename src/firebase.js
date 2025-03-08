@@ -1,17 +1,17 @@
 // Import Firebase SDKs
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDyLgcrzPlq1BGU2Jk7EQTcTf_ivjmr-WA",
-    authDomain: "fitness-tracker-3dd10.firebaseapp.com",
-    projectId: "fitness-tracker-3dd10",
-    storageBucket: "fitness-tracker-3dd10.appspot.com",
-    messagingSenderId: "405702616690",
-    appId: "1:405702616690:web:bf2dc2c36f5eb9273744eb",
-    measurementId: "G-7NF77107F9"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
@@ -25,8 +25,10 @@ const signInWithGoogle = async () => {
     try {
         const result = await signInWithPopup(auth, provider);
         console.log("User Info:", result.user); // Logs user info
+        return result.user;
     } catch (error) {
         console.error("Google Sign-In Error:", error);
+        throw error;
     }
 };
 
@@ -37,8 +39,13 @@ const logout = async () => {
         console.log("User signed out");
     } catch (error) {
         console.error("Logout Error:", error);
+        throw error;
     }
 };
 
-// Export
-export { auth, provider, db, signInWithGoogle, logout };
+// Function to listen for authentication state changes
+const onAuthChange = (callback) => {
+    return onAuthStateChanged(auth, callback);
+};
+
+export { auth, provider, db, signInWithGoogle, logout, onAuthChange };
