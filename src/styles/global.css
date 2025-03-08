@@ -4,15 +4,32 @@
     box-sizing: border-box;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Makes sure the body takes up full screen height */
-    font-family: Arial, sans-serif;
-    background-color: grey;
-    padding-top: 70px;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
 }
 
+
+.red-letter {
+    color: red; 
+}
+
+.blue-letter {
+    color: blue; 
+}
+
+.welcome-text {
+    color: #ffffff; 
+    font-size: 65px;
+}
+
+.welcome-paragraph {
+    color: #ffffff; 
+    font-size: 30px;
+}
 
 h2 {
     margin: 50px;
@@ -32,6 +49,15 @@ h2 {
     height: 100%;
 }
 
+.welcome-text {
+    color: #ffffff; 
+    font-size: 65px;
+}
+
+.welcome-paragraph {
+    color: #ffffff; 
+    font-size: 30px;
+}
 
 header {
     display: flex;
@@ -72,8 +98,8 @@ nav ul li a {
 
 .auth-links {
     display: flex;
-    align-items: center; /* Ensures everything inside is vertically centered */
-    gap: 15px; /* Space between text and button */
+    align-items: center; 
+    gap: 15px; 
 }
 
 .auth-links a {
@@ -142,7 +168,6 @@ input {
 }
 
 
-/* Center the button and make it smaller */
 button {
     display: block;
     margin: 0 auto;
@@ -227,7 +252,7 @@ p {
         }
 
 main {
-    flex: 1; /* This makes sure the content area expands to push the footer down */
+    flex: 1; 
 }
 
 
@@ -333,7 +358,7 @@ footer ul li a:hover {
 
 .exercise-name {
     font-weight: bold;
-    color: black;
+    color: rgb(253, 253, 253);
 }
 
 .exercise-bodypart {
@@ -398,4 +423,24 @@ footer ul li a:hover {
 
 .save-routine-btn:hover {
     background-color: #003d7a;
+}
+
+
+.vanta-container {
+    width: 100%; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    position: relative;
+    z-index: 0; 
+}
+
+.vanta-container h2,
+.vanta-container p {
+    position: relative;
+    z-index: 1; 
+    text-align: center; 
+    width: 100%; 
 }
