@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import NavBar from "../../components/NavBar";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase"; // Ensure correct import
 
@@ -14,16 +15,7 @@ export default function LoginPage() {
 
     return (
         <div>
-            {/* Header */}
-            <header>
-                <div className="logo-container">
-                    <img src="apexfitlogo.svg" />
-                </div>
-                <div className="auth-links">
-                    <Link href="/login">Log In</Link>
-                    <Link href="/signup" className="signup">Sign Up</Link>
-                </div>
-            </header>
+            <NavBar/>
 
             {/* Login Container */}
             <div className="login-container">
@@ -32,7 +24,7 @@ export default function LoginPage() {
                     <input type="email" id="email" placeholder="Email Address" required />
                     <p className="error-message" id="emailError"></p>
 
-                    <input type="password" id="password" placeholder="Password" required />
+                    <input type="password" id="passsword" placeholder="Password" required />
                     <p className="error-message" id="passwordError"></p>
 
                     <button type="submit">Log In</button>
