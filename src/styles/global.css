@@ -5,9 +5,14 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Makes sure the body takes up full screen height */
     font-family: Arial, sans-serif;
     background-color: grey;
+    padding-top: 70px;
 }
+
 
 h2 {
     margin: 50px;
@@ -63,11 +68,6 @@ nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: bold;
-}
-
-
-body {
-    padding-top: 70px;
 }
 
 .auth-links {
@@ -226,18 +226,20 @@ p {
             text-decoration: underline;
         }
 
+main {
+    flex: 1; /* This makes sure the content area expands to push the footer down */
+}
 
-/* Footer styling */
+
 footer {
     background-color: #333;
     color: white;
     padding: 20px 0;
     text-align: center;
-    position: relative;
-    bottom: 0;
     width: 100%;
-    margin-top: 30px; /* To avoid overlap with the content above */
+    margin-top: auto; /* Pushes footer to the bottom */
 }
+
 
 .footer-content {
     max-width: 1200px;
@@ -256,16 +258,16 @@ footer ul {
     padding: 0;
 }
 
-    footer ul li {
-        display: inline;
-    }
+footer ul li {
+    display: inline;
+}
 
-        footer ul li a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-        }
+footer ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
 
-            footer ul li a:hover {
-                text-decoration: underline;
-            }
+footer ul li a:hover {
+    text-decoration: underline;
+}
