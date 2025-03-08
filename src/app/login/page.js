@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../firebase"; // Ensure correct import
 
@@ -63,16 +64,7 @@ export default function LoginPage() {
             </div>
 
             {/* Footer */}
-            <footer>
-                <div className="footer-content">
-                    <p>&copy; 2025 ApexFitness. All Rights Reserved.</p>
-                    <ul>
-                        <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-                        <li><Link href="/terms-of-service">Terms of Service</Link></li>
-                        <li><Link href="/contact">Contact Us</Link></li>
-                    </ul>
-                </div>
-            </footer>
+            <Footer/>
         </div>
     );
 }
