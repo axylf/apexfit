@@ -14,7 +14,7 @@ export default function Dashboard() {
 
     return (
         <div className={styles.dashboardContainer}>
-            {/* Header Section (Unchanged) */}
+            {/* Header Section */}
             <NavBar />
             <div className={styles.navLinks}>
                 <Link href="/dashboard">Home</Link>
@@ -27,22 +27,20 @@ export default function Dashboard() {
                 {/* Profile Box */}
                 <div className={styles.profileBox}>
                     <div className={styles.profilePic}>JD</div> {/* Replace "JD" with user initials */}
-                    <div className={styles.profileInfo}>
-                        <h3>John Doe</h3>
-                        <p>Fitness Enthusiast</p>
-                        <div className={styles.profileStats}>
-                            <div className={styles.profileStatItem}>
-                                <h4>Age</h4>
-                                <p>28</p>
-                            </div>
-                            <div className={styles.profileStatItem}>
-                                <h4>Weight</h4>
-                                <p>75 kg</p>
-                            </div>
-                            <div className={styles.profileStatItem}>
-                                <h4>Height</h4>
-                                <p>180 cm</p>
-                            </div>
+                    <h3>John Doe</h3>
+                    <p>Fitness Enthusiast</p>
+                    <div className={styles.profileStats}>
+                        <div className={styles.profileStatItem}>
+                            <h4>Age</h4>
+                            <p>28</p>
+                        </div>
+                        <div className={styles.profileStatItem}>
+                            <h4>Weight</h4>
+                            <p>75 kg</p>
+                        </div>
+                        <div className={styles.profileStatItem}>
+                            <h4>Height</h4>
+                            <p>180 cm</p>
                         </div>
                     </div>
                 </div>

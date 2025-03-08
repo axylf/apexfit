@@ -10,17 +10,21 @@ export default function ChatBot() {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    
+    setMessages(updatedMessages);
     setInput("");
     setLoading(true);
 
     try {
-      const response = await fetchMessage([...messages, userMessage]);
+      const response = await fetchMessage(updatedMessages);
+      if (!response) throw new Error("Empty response from API");
+
       const botMessage = { role: "assistant", content: response };
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error("Error:", error);
-      setMessages((prev) => [...prev, { role: "assistant", content: "Error fetching response." }]);
+      console.error("Error fetching response:", error);
+      setMessages((prev) => [...prev, { role: "assistant", content: "Error fetching response from OpenAI." }]);
     } finally {
       setLoading(false);
     }
@@ -32,20 +36,27 @@ export default function ChatBot() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPEN_AI_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           model: "gpt-3.5-turbo",
-          messages: chatHistory,
+          messages: [{ role: "system", content: "You are health, wellness, and nutrition asssissant for ApexFit. You can only provide information based on these categories." }, ...chatHistory],
           max_tokens: 150,
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("OpenAI API Error:", errorData);
+        return `Error: ${errorData.error?.message || "Unknown API error"}`;
+      }
+
       const data = await response.json();
-      return data.choices?.[0]?.message?.content?.trim() || "No response.";
+      console.log("OpenAI API Response:", data); // Debugging log
+      return data.choices?.[0]?.message?.content?.trim() || "No response received.";
     } catch (error) {
       console.error("API request failed:", error);
-      return "Failed to connect to AI.";
+      return "Failed to connect to OpenAI.";
     }
   };
 
