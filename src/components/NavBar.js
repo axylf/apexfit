@@ -8,8 +8,8 @@ export default function NavBar() {
                 <img src="apexfitlogo.svg" />
             </div>
             <div className="auth-links">
-                <Link href="../app/login">Log In</Link>
-                <Link href="../app/signup" className="signup">Sign Up</Link>
+                <Link href="../login">Log In</Link>
+                <Link href="../signup" className="signup">Sign Up</Link>
             </div>
         </header>
     );
