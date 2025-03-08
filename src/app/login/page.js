@@ -16,8 +16,8 @@ export default function LoginPage() {
         <div>
             {/* Header */}
             <header>
-                <div className="logo">
-                    <span className="red-letter">A</span>pexFitness
+                <div className="logo-container">
+                    <img src="apexfitlogo.svg" />
                 </div>
                 <div className="auth-links">
                     <Link href="/login">Log In</Link>
