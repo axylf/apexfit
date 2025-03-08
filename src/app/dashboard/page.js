@@ -14,11 +14,51 @@ export default function Dashboard() {
 
     return (
         <div className={styles.dashboardContainer}>
+            {/* Header Section (Unchanged) */}
             <NavBar />
             <div className={styles.navLinks}>
                 <Link href="/dashboard">Home</Link>
                 <Link href="/dashboard/diet">Diet</Link>
                 <Link href="/dashboard/workout">Workout</Link>
+            </div>
+
+            {/* Profile and Calorie Box Container */}
+            <div className={styles.profileCalorieContainer}>
+                {/* Profile Box */}
+                <div className={styles.profileBox}>
+                    <div className={styles.profilePic}>JD</div> {/* Replace "JD" with user initials */}
+                    <div className={styles.profileInfo}>
+                        <h3>John Doe</h3>
+                        <p>Fitness Enthusiast</p>
+                        <div className={styles.profileStats}>
+                            <div className={styles.profileStatItem}>
+                                <h4>Age</h4>
+                                <p>28</p>
+                            </div>
+                            <div className={styles.profileStatItem}>
+                                <h4>Weight</h4>
+                                <p>75 kg</p>
+                            </div>
+                            <div className={styles.profileStatItem}>
+                                <h4>Height</h4>
+                                <p>180 cm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Calorie Box */}
+                <div className={styles.calorieBox}>
+                    <h3>Calories</h3>
+                    <p>2070</p>
+                    <p>Recovery</p>
+                    <div className={styles.progressBar}>
+                        <div
+                            className={styles.progress}
+                            style={{ width: "30%" }} /* Example progress */
+                        ></div>
+                    </div>
+                </div>
             </div>
 
             {/* Weekly Nutrition Section */}
