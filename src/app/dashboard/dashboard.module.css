@@ -256,6 +256,17 @@
     border-radius: 5px;
 }
 
+
+.editButton {
+    width: 30px; /* Adjust this value as needed */
+    height: 30px; /* Optional: adjust height to match the new width */
+    padding: 0; /* Optional: remove any unnecessary padding */
+    background: transparent; /* Keep the background transparent if desired */
+    border: none; /* Remove the border if needed */
+    cursor: pointer;
+}
+
+
 @media (max-width: 768px) {
     .navLinks {
         flex-direction: column;
@@ -277,3 +288,4 @@
         width: 80%; /* Adjust the width for smaller screens */
     }
 }
+
