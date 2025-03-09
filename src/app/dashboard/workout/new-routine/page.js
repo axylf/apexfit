@@ -1,16 +1,65 @@
-"use client"
+﻿"use client";
 import { useState } from "react";
 import ExerciseSelector from "../../../../components/ExerciseSelector";
+import NavBar from "../../../../components/NavBar";
+import Footer from "../../../../components/Footer";
 import "../../../../styles/global.css";
-import Footer from "../../../../components/Footer"
-import NavBar from "../../../../components/NavBar"
+import styles from "./new-routine.module.css";
 
 export default function NewRoutinePage() {
     const [selectedExercises, setSelectedExercises] = useState([]);
 
+    // Capitalize function for exercise names and body parts
+    const capitalizeWords = (str) => {
+        return str.replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
     const handleSelectExercise = (exercise) => {
-        setSelectedExercises([...selectedExercises, exercise]); // Add selected exercise
-        console.log("Selected Exercise:", exercise);
+        setSelectedExercises([
+            ...selectedExercises,
+            { ...exercise, sets: [{ set: 1, lbs: "", reps: "" }] },
+        ]);
+    };
+
+    const handleSetChange = (exerciseIndex, setIndex, field, value) => {
+        setSelectedExercises((prevExercises) =>
+            prevExercises.map((exercise, exIdx) => {
+                if (exIdx !== exerciseIndex) return exercise;
+
+                return {
+                    ...exercise,
+                    sets: exercise.sets.map((set, sIdx) => {
+                        if (sIdx !== setIndex) return set;
+                        return { ...set, [field]: value };
+                    }),
+                };
+            })
+        );
+    };
+
+    // Function to add a new set
+    const addSet = (exerciseIndex) => {
+        setSelectedExercises((prevExercises) =>
+            prevExercises.map((exercise, exIdx) => {
+                if (exIdx !== exerciseIndex) return exercise;
+                return {
+                    ...exercise,
+                    sets: [...exercise.sets, { set: exercise.sets.length + 1, lbs: "", reps: "" }],
+                };
+            })
+        );
+    };
+
+    // Function to remove a set
+    const removeSet = (exerciseIndex, setIndex) => {
+        setSelectedExercises((prevExercises) =>
+            prevExercises.map((exercise, exIdx) => {
+                if (exIdx !== exerciseIndex) return exercise;
+
+                const updatedSets = exercise.sets.filter((_, sIdx) => sIdx !== setIndex);
+                return { ...exercise, sets: updatedSets };
+            })
+        );
     };
 
     const handleSaveRoutine = () => {
@@ -21,26 +70,81 @@ export default function NewRoutinePage() {
     return (
         <>
             <NavBar />
-            <div className="routine-container">
-                <h1 className="routine-title">Create Routine</h1>
+            <div className={styles["routine-container"]}>
+                <h1 className={styles["routine-title"]}>Create Routine</h1>
 
-                {/* Pass the correct prop */}
                 <ExerciseSelector onSelectExercise={handleSelectExercise} />
 
-                {/* Display selected exercises */}
-                <div className="selected-exercises">
-                    {selectedExercises.map((ex, index) => (
-                        <div key={index} className="exercise-card">
-                            <img src={ex.gifUrl} alt={ex.name} className="exercise-image" />
-                            <div className="exercise-info">
-                                <p className="exercise-name">{ex.name}</p>
+                {/* Selected Exercises List */}
+                <div className={styles["selected-exercises"]}>
+                    {selectedExercises.map((exercise, exerciseIndex) => (
+                        <div key={exerciseIndex} className={styles["exercise-card"]}>
+                            {/* Exercise Name & Body Part */}
+                            <div className={styles["exercise-header"]}>
+                                <p className={styles["exercise-name"]}>
+                                    {capitalizeWords(exercise.name)}
+                                    <span className={styles["exercise-body-part"]}>
+                                        ({capitalizeWords(exercise.bodyPart)})
+                                    </span>
+                                </p>
+                            </div>
+
+                            {/* Exercise Row */}
+                            <div className={styles["exercise-content"]}>
+                                <img src={exercise.gifUrl} alt={exercise.name} className={styles["exercise-image"]} />
+
+                                {/* Set, LBS, Reps Table */}
+                                <table className={styles["exercise-table"]}>
+                                    <thead>
+                                        <tr>
+                                            <>
+                                                <th>SET</th>
+                                                <th>LBS</th>
+                                                <th>REPS</th>
+                                            </>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {exercise.sets.map((set, setIndex) => (
+                                            <tr key={setIndex}>
+                                                <td>{set.set}</td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        value={set.lbs}
+                                                        onChange={(e) => handleSetChange(exerciseIndex, setIndex, "lbs", e.target.value)}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <input
+                                                        type="number"
+                                                        value={set.reps}
+                                                        onChange={(e) => handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    <button className={styles["delete-set-btn"]} onClick={() => removeSet(exerciseIndex, setIndex)}>❌</button>
+                                                </td>
+                                            </tr>
+                                        ))}
+
+                                        {/* "Add Set" Button inside table */}
+                                        <tr>
+                                            <td colSpan="4" style={{ textAlign: "center" }}>
+                                                <button onClick={() => addSet(exerciseIndex)} className={styles["add-set-btn"]}>
+                                                    + Add Set
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     ))}
                 </div>
 
                 {/* Save Routine Button */}
-                <button onClick={handleSaveRoutine} className="save-routine-btn">
+                <button onClick={handleSaveRoutine} className={styles["save-routine-btn"]}>
                     Save Routine
                 </button>
             </div>

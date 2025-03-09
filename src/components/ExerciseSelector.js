@@ -52,6 +52,11 @@ export default function ExerciseSelector({ onSelectExercise }) {
         }
     };
 
+    // Function to capitalize the first letter of each word
+    const capitalizeWords = (str) => {
+        return str.replace(/\b\w/g, (char) => char.toUpperCase());
+    };
+
     return (
         <div className="exercise-selector">
             <h2>Search for an Exercise</h2>
@@ -85,9 +90,9 @@ export default function ExerciseSelector({ onSelectExercise }) {
                             />
 
                             {/* Exercise Details */}
-                            <div className="exercise-details">
-                                <span className="exercise-name">{exercise.name}</span>
-                                <span className="exercise-bodypart">{exercise.bodyPart}</span>
+                            <div className="exercise-info">
+                                <span className="exercise-name">{capitalizeWords(exercise.name)}</span>
+                                <span className="exercise-bodyPart"> (<strong>{capitalizeWords(exercise.bodyPart)}</strong>)</span>
                             </div>
                         </div>
                     ))}
