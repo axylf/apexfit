@@ -1,5 +1,9 @@
 ﻿"use client";
-import { useState } from "react";
+import { db, auth } from "../../../../firebase"; // Correct path based on your firebase.js
+import { collection, addDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+
 import ExerciseSelector from "../../../../components/ExerciseSelector";
 import NavBar from "../../../../components/NavBar";
 import Footer from "../../../../components/Footer";
@@ -62,9 +66,38 @@ export default function NewRoutinePage() {
         );
     };
 
-    const handleSaveRoutine = () => {
-        console.log("Routine Saved:", selectedExercises);
-        // Save to Firestore later
+    const [currentUser, setCurrentUser] = useState(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setCurrentUser(user);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const handleSaveRoutine = async () => {
+        if (!currentUser) {
+            alert("You must be logged in to save a routine!");
+            return;
+        }
+
+        const routineName = prompt("Enter a name for your routine:");
+        if (!routineName) return;
+
+        const routineData = {
+            name: routineName,
+            exercises: selectedExercises,
+            userId: currentUser.uid, // Corrected auth usage
+            createdAt: new Date()
+        };
+
+        try {
+            await addDoc(collection(db, "users", currentUser.uid, "routines"), routineData);
+            alert("Routine saved successfully!");
+        } catch (error) {
+            console.error("Error saving routine:", error);
+            alert("Failed to save routine.");
+        }
     };
 
     return (
