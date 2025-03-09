@@ -61,8 +61,14 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="login-container">
+    <div className="chatbot-container">
+
+      <div>
+        <h1>        Ask AI:        </h1>
+      </div>
+      
       <div className="flex flex-col max-w-md mx-auto p-4 border rounded-lg shadow-lg bg-white">
+
         <div className="flex flex-col space-y-2 mb-4 overflow-auto max-h-60 p-2">
           {messages.map((message, index) => (
             <div
