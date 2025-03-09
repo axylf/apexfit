@@ -59,6 +59,8 @@ export default function ExerciseSelector({ onSelectExercise }) {
 
     return (
         <div className="exercise-selector">
+            <hr className="search-divider" />
+
             <h2>Search for an Exercise</h2>
 
             {/* Search Input */}

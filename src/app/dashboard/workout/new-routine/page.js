@@ -2,6 +2,7 @@
 import { db, auth } from "../../../../firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+
 import { useEffect, useState } from "react";
 import ExerciseSelector from "../../../../components/ExerciseSelector";
 import NavBar from "../../../../components/NavBar";
@@ -50,6 +51,8 @@ export default function NewRoutinePage() {
         });
     };
 
+    const [routineName, setRoutineName] = useState("");
+
     const handleSaveRoutine = async () => {
         if (!currentUser) return alert("You must be logged in to save a routine!");
         const routineName = prompt("Enter a name for your routine:");
@@ -75,7 +78,15 @@ export default function NewRoutinePage() {
         <>
             <NavBar />
             <div className={styles["routine-container"]}>
-                <h1 className={styles["routine-title"]}>Create Routine</h1>
+                {/* Routine Name Input */}
+                <input
+                    type="text"
+                    className={styles["routine-name-input"]}
+                    placeholder="Name your routine here..."
+                    value={routineName}
+                    onChange={(e) => setRoutineName(e.target.value)}
+                />
+
                 <ExerciseSelector onSelectExercise={handleSelectExercise} />
                 <div className={styles["selected-exercises"]}>
                     {selectedExercises.map((exercise, exerciseIndex) => (
@@ -106,7 +117,7 @@ export default function NewRoutinePage() {
                                                     <input type="number" className={styles["no-spinner"]} value={set.reps}
                                                         onChange={(e) => handleSetChange(exerciseIndex, setIndex, "reps", e.target.value)} />
                                                 </td>
-                                                <td className={styles["delete-column"]}>
+                                                <td>
                                                     {setIndex > 0 && (
                                                         <button className={styles["delete-set-btn"]}
                                                             onClick={() => removeSet(exerciseIndex, setIndex)}>❌</button>

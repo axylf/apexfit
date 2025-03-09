@@ -18,6 +18,7 @@ body {
     color: #EFECF0; /* Set text color for contrast */
     margin: 0;
     padding: 0;
+    padding-top: 120px; /* Push content down so it doesn't overlap navbar */
     font-family: Arial, sans-serif; /* Ensure consistent font */
 }
 
@@ -38,10 +39,6 @@ body {
 .welcome-paragraph {
     color: #ffffff; 
     font-size: 30px;
-}
-
-h2 {
-    margin: 50px;
 }
 
 .red-letter {
@@ -162,11 +159,6 @@ nav ul li a {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 input {
     display: block;
     margin: 0 auto;
@@ -193,9 +185,9 @@ button {
     font-size: 1em;
 }
 
-    button:hover {
-        background-color: #003d7a;
-    }
+button:hover {
+    background-color: #003d7a;
+}
 
 .social-login button {
     width: 80%;
@@ -219,14 +211,13 @@ button {
     background-color: #db4437;
 }
 
-    .google-login:hover {
-        background-color: #c1351d;
-    }
+.google-login:hover {
+    background-color: #c1351d;
+}
 
-    .google-login svg {
-        margin-right: 10px; /* Space between icon and text */
-    }
-
+.google-login svg {
+    margin-right: 10px; /* Space between icon and text */
+}
 
 .facebook-login {
     display: flex;
@@ -242,9 +233,9 @@ button {
     color: white;
 }
 
-    .facebook-login svg {
-        fill: white;
-    }
+.facebook-login svg {
+    fill: white;
+}
 
 
 /* Links and footer */
@@ -253,19 +244,18 @@ p {
     font-size: 0.9em;
 }
 
-    p a {
-        text-decoration: none;
-        color: #0056b3;
-    }
+p a {
+    text-decoration: none;
+    color: #0056b3;
+}
 
-        p a:hover {
-            text-decoration: underline;
-        }
+p a:hover {
+    text-decoration: underline;
+}
 
 main {
     flex: 1; 
 }
-
 
 footer {
     background-color: #333;
@@ -275,7 +265,6 @@ footer {
     width: 100%;
     margin-top: auto; /* Pushes footer to the bottom */
 }
-
 
 .footer-content {
     max-width: 1200px;
@@ -315,14 +304,28 @@ footer ul li a:hover {
     padding: 20px;
 }
 
+h2 {
+    margin: 50px;
+    margin-bottom: 0px;
+}
+
+.search-divider {
+    width: 100%;
+    border: none;
+    height: 2px;
+    background-color: #444; /* Adjust the color */
+    margin: 10px 0; /* Spacing */
+}
+
 .exercise-search {
     background: #0F0F0F;
     width: 100%;
     max-width: 500px;
-    padding: 10px;
+    padding: 18px;
     border: 1px solid #0F0F0F;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 19px;
+    margin-top: 30px;
 }
 
 /* Loading Text */
@@ -483,11 +486,11 @@ input:focus {
     color: white; /* Ensure text is visible */
 }
 
-    /* Ensure the placeholder text is visible */
-    input::placeholder {
-        color: #B7B5B8; /* Light gray for placeholder text */
-        opacity: 1;
-    }
+/* Ensure the placeholder text is visible */
+input::placeholder {
+    color: #B7B5B8; /* Light gray for placeholder text */
+    opacity: 1;
+}
 
 /* Remove number input spinners globally */
 input[type="number"] {
@@ -495,10 +498,10 @@ input[type="number"] {
     -moz-appearance: textfield !important;
 }
 
-    /* Specifically remove up/down arrows */
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none !important;
-        display: none !important;
-        margin: 0 !important;
-    }
+/* Specifically remove up/down arrows */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    display: none !important;
+    margin: 0 !important;
+}
