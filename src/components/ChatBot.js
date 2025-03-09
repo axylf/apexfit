@@ -74,9 +74,7 @@ export default function ChatBot() {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`p-2 rounded-lg max-w-xs ${
-                  message.role === "user" ? "bg-blue-500 text-white self-end" : "bg-gray-200 self-start"
-                }`}
+                className={message.role === "user" ? "usermsg" : "botmsg"}
               >
                 {message.content}
               </div>

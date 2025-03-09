@@ -463,7 +463,7 @@ h2 {
 
 .chatbot-container {
     width: 550px;
-    height: 700px;
+    /*height: 700px;*/
     margin: 120px auto 0; /* Added 120px margin-top */
     margin-top: 10%;
     margin-bottom: 5%;
@@ -528,4 +528,32 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     display: none !important;
     margin: 0 !important;
+}
+
+/*ChatBot messages*/
+.usermsg, .botmsg {
+    width: 80%;
+    max-width: 600px; /* Limits width for better readability on larger screens */
+    min-height: 50px; /* Ensures messages have enough height */
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 1em;
+    border-radius: 4px;
+    color: #f7f7f7;
+    word-wrap: break-word; /* Prevents long words from overflowing */
+    overflow-wrap: break-word; /* Ensures text wraps properly */
+    display: flex;
+    align-items: center; /* Centers text vertically */
+}
+
+.usermsg {
+    background-color: #0056b3;
+    margin-left: auto; /* Pushes to the right */
+    border-top-right-radius: 0; /* Styling for chat bubble effect */
+}
+
+.botmsg {
+    background-color: #797d81;
+    margin-right: auto; /* Pushes to the left */
+    border-top-left-radius: 0; /* Styling for chat bubble effect */
 }
