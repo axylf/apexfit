@@ -1,11 +1,35 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { FaRegEdit } from "react-icons/fa";
 import NavBar from "../../components/NavBar";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
 
 export default function Dashboard() {
-    const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"]; // Days of the week
+    const [isEditing, setIsEditing] = useState(false);
+    const [name, setName] = useState(""); // Initialize with an empty string
+    const [feature, setFeature] = useState("Fitness Enthusiast");
+
+    // On component mount, check if name exists in localStorage and set it
+    useEffect(() => {
+        const savedName = localStorage.getItem("userName");
+        if (savedName) {
+            setName(savedName); // Set the name from localStorage
+        } else {
+            setName("John Doe"); // Default name
+        }
+    }, []);
+
+    const handleSave = () => {
+        console.log("Saved:", name, feature);
+        localStorage.setItem("userName", name); // Save name to localStorage
+        setIsEditing(false); // Stop editing mode
+    };
+
+    const daysOfWeek = ["M", "T", "W", "T", "F", "S", "S"];
     const nutritionData = {
-        consumed: 0, // Example data
+        consumed: 0,
         remaining: 0,
         protein: 0,
         fat: 0,
@@ -28,9 +52,41 @@ export default function Dashboard() {
             <div className={styles.profileCalorieContainer}>
                 {/* Profile Box */}
                 <div className={styles.profileBox}>
-                    <div className={styles.profilePic}>JD</div> {/* Replace "JD" with user initials */}
-                    <h3>John Doe</h3>
-                    <p>Fitness Enthusiast</p>
+                    <div className={styles.profileHeader}>
+                        <div className={styles.profilePic}>{name.slice(0, 2).toUpperCase()}</div> {/* Initials */}
+                        <button 
+                            className={styles.editButton} 
+                            onClick={() => setIsEditing(!isEditing)}
+                        >
+                            <FaRegEdit size={20} />
+                        </button>
+                    </div>
+                    {isEditing ? (
+                        <div className={styles.profileEditForm}>
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)} // Update name
+                            />
+                            <input
+                                type="text"
+                                value={feature}
+                                onChange={(e) => setFeature(e.target.value)} // Update feature
+                            />
+                            <button 
+                                className={styles.saveButton} 
+                                onClick={handleSave}
+                            >
+                                Save
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <h3>{name}</h3>
+                            <p>{feature}</p>
+                        </>
+                    )}
+
                     <div className={styles.profileStats}>
                         <div className={styles.profileStatItem}>
                             <h4>Age</h4>
@@ -55,7 +111,7 @@ export default function Dashboard() {
                     <div className={styles.progressBar}>
                         <div
                             className={styles.progress}
-                            style={{ width: "30%" }} /* Example progress */
+                            style={{ width: "30%" }}
                         ></div>
                     </div>
                 </div>
