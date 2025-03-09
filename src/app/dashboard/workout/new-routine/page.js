@@ -4,6 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import ExerciseSelector from "../../../../components/ExerciseSelector";
 import NavBar from "../../../../components/NavBar";
 import Footer from "../../../../components/Footer";
@@ -13,10 +14,11 @@ import styles from "./new-routine.module.css";
 export default function NewRoutinePage() {
     const [selectedExercises, setSelectedExercises] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
+    const router = useRouter();
+    const capitalizeWords = (str) => str.replace(/\b\w/g, (char) => char.toUpperCase());
+    const [routineName, setRoutineName] = useState("");
 
     useEffect(() => onAuthStateChanged(auth, setCurrentUser), []);
-
-    const capitalizeWords = (str) => str.replace(/\b\w/g, (char) => char.toUpperCase());
 
     const updateExercises = (exerciseIndex, updateFn) => {
         setSelectedExercises(prevExercises => prevExercises.map((exercise, exIdx) =>
@@ -51,12 +53,13 @@ export default function NewRoutinePage() {
         });
     };
 
-    const [routineName, setRoutineName] = useState("");
-
     const handleSaveRoutine = async () => {
         if (!currentUser) return alert("You must be logged in to save a routine!");
-        const routineName = prompt("Enter a name for your routine:");
-        if (!routineName) return;
+
+        if (!routineName.trim()) {
+            alert("Please enter a name for your routine.");
+            return;
+        }
 
         try {
             await addDoc(collection(db, "users", currentUser.uid, "routines"), {
@@ -65,7 +68,10 @@ export default function NewRoutinePage() {
                 userId: currentUser.uid,
                 createdAt: new Date()
             });
+
             alert("Routine saved successfully!");
+            setRoutineName(""); // Clear input field after saving
+            router.push("/dashboard/workout");
         } catch (error) {
             console.error("Error saving routine:", error);
             alert("Failed to save routine.");
