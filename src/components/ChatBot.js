@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Draggable from 'react-draggable';
 
 export default function ChatBot() {
   const [messages, setMessages] = useState([]);
@@ -61,45 +62,45 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="chatbot-container">
+    
+      <div className="chatbot-container">
+        <div>
+          <h1>        Ask AI:        </h1>
+        </div>
+        
+        <div className="flex flex-col max-w-md mx-auto p-4 border rounded-lg shadow-lg bg-white">
 
-      <div>
-        <h1>        Ask AI:        </h1>
-      </div>
-      
-      <div className="flex flex-col max-w-md mx-auto p-4 border rounded-lg shadow-lg bg-white">
-
-        <div className="flex flex-col space-y-2 mb-4 overflow-auto max-h-60 p-2">
-          {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`p-2 rounded-lg max-w-xs ${
-                message.role === "user" ? "bg-blue-500 text-white self-end" : "bg-gray-200 self-start"
-              }`}
+          <div className="flex flex-col space-y-2 mb-4 overflow-auto max-h-60 p-2">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`p-2 rounded-lg max-w-xs ${
+                  message.role === "user" ? "bg-blue-500 text-white self-end" : "bg-gray-200 self-start"
+                }`}
+              >
+                {message.content}
+              </div>
+            ))}
+            {loading && <div className="text-gray-500">Typing...</div>}
+          </div>
+          <div className="flex space-x-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              placeholder="Type a message..."
+              className="flex-1 p-2 border rounded-md focus:outline-none"
+            />
+            <button
+              onClick={sendMessage}
+              disabled={loading}
+              className="p-2 bg-blue-600 text-white rounded-md disabled:opacity-50"
             >
-              {message.content}
-            </div>
-          ))}
-          {loading && <div className="text-gray-500">Typing...</div>}
-        </div>
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-            placeholder="Type a message..."
-            className="flex-1 p-2 border rounded-md focus:outline-none"
-          />
-          <button
-            onClick={sendMessage}
-            disabled={loading}
-            className="p-2 bg-blue-600 text-white rounded-md disabled:opacity-50"
-          >
-            Send
-          </button>
+              Send
+            </button>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
