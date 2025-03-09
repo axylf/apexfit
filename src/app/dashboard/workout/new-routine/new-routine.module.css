@@ -35,10 +35,11 @@
 /* Exercise Card */
 .exercise-card {
     display: flex;
+    width: 100%;
     flex-direction: column;
     padding: 12px;
     border-radius: 8px;
-    max-width: 550px;
+    max-width: 500px;
     margin: 0 auto;
 }
 

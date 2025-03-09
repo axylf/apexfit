@@ -13,6 +13,14 @@ html, body {
     overflow-x: hidden; 
 }
 
+body {
+    background: #1F1E24; /* Your dashboard background color */
+    color: #EFECF0; /* Set text color for contrast */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Ensure consistent font */
+}
+
 
 .red-letter {
     color: red; 
@@ -308,10 +316,11 @@ footer ul li a:hover {
 }
 
 .exercise-search {
+    background: #0F0F0F;
     width: 100%;
     max-width: 500px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #0F0F0F;
     border-radius: 5px;
     font-size: 16px;
 }
@@ -325,7 +334,7 @@ footer ul li a:hover {
 .exercise-dropdown-container {
     width: 100%;
     max-width: 500px;
-    background: white;
+    background: #0F0F0F;
     border-radius: 5px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     margin-top: 10px;
@@ -336,14 +345,14 @@ footer ul li a:hover {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid black;
     cursor: pointer;
     transition: background 0.2s ease-in-out;
 }
 
-.exercise-dropdown:hover {
-    background: #f3f4f6; /* Light Gray*/
-}
+    .exercise-dropdown:hover {
+        background: #4A4A4A; /* Light Gray*/
+    }
 
 .exercise-image {
     width: 50px;
@@ -389,15 +398,14 @@ footer ul li a:hover {
     margin-top: 20px;
 }
 
+/* Exercise Card */
 .exercise-card {
     display: flex;
-    align-items: center;
-    background: #f3f3f3;
-    padding: 10px;
+    flex-direction: column;
+    padding: 12px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    width: 100%;
-    max-width: 500px;
+    max-width: 550px;
+    margin: 0 auto;
 }
 
 .exercise-image {
@@ -459,4 +467,11 @@ footer ul li a:hover {
     background-color: #f7f7f7;
     border-radius: 8px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+input:focus {
+    outline: none; /* Removes default browser focus outline */
+    border: 2px solid #4280c7; /* Optional: Custom border when focused */
+    background: #1F1E24; /* Optional: Match background */
+    color: white; /* Ensure text is visible */
 }
