@@ -1,5 +1,6 @@
-"use client";
+﻿"use client";
 import { useState, useEffect } from "react";
+import styles from "@/styles/FoodSelector.module.css";
 
 export default function FoodSelector({ onSelectDiet }) {
     const [searchTerm, setSearchTerm] = useState("");
@@ -26,27 +27,87 @@ export default function FoodSelector({ onSelectDiet }) {
         setLoading(true);
         try {
             console.log("Fetching foods for:", query);
+
             const response = await fetch(
                 `https://trackapi.nutritionix.com/v2/search/instant?query=${query}`,
                 {
                     method: "GET",
                     headers: {
-                        "x-app-id": API_ID,
-                        "x-app-key": API_KEY,
+                        "x-app-id": process.env.NEXT_PUBLIC_NUTRITIONIX_APP_ID,
+                        "x-app-key": process.env.NEXT_PUBLIC_NUTRITIONIX_API_KEY,
+                        "Content-Type": "application/json"
                     },
                 }
             );
 
-            if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+            if (!response.ok) throw new Error(`API Error: ${response.status} - ${response.statusText}`);
 
             const data = await response.json();
-            const filteredFoods = data.common.slice(0, 5); // Get first 5 results
+            console.log("API Response:", JSON.stringify(data, null, 2)); // Debugging
 
-            setFoods(filteredFoods);
+            if (!data.common || data.common.length === 0) {
+                throw new Error("No foods found. Try a different search term.");
+            }
+
+            const processedFoods = await Promise.all(
+                data.common.slice(0, 5).map(async (food) => {
+                    const nutrition = await fetchFoodDetails(food.food_name); // ✅ Fetch both calories & protein
+
+                    return {
+                        food_name: food.food_name,
+                        brand_name: food.brand_name || "Generic",
+                        serving_qty: food.serving_qty || 1,
+                        serving_unit: food.serving_unit || "unit",
+                        nf_calories: nutrition.calories, // ✅ Store calories
+                        nf_protein: nutrition.protein, // ✅ Store protein
+                        photo: food.photo ? food.photo.thumb : "/placeholder.jpg"
+                    };
+                })
+            );
+
+            setFoods(processedFoods);
         } catch (error) {
-            console.error("Error fetching foods:", error);
+            console.error("Error fetching foods:", error.message);
+            alert(error.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchFoodDetails = async (foodName) => {
+        try {
+            const response = await fetch(
+                "https://trackapi.nutritionix.com/v2/natural/nutrients",
+                {
+                    method: "POST",
+                    headers: {
+                        "x-app-id": process.env.NEXT_PUBLIC_NUTRITIONIX_APP_ID,
+                        "x-app-key": process.env.NEXT_PUBLIC_NUTRITIONIX_API_KEY,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ query: foodName }) // Send food name
+                }
+            );
+
+            const data = await response.json();
+            console.log(`📢 API Response for "${foodName}":`, data); // ✅ Logs full API response
+
+            // Check if the response contains food data
+            if (!data.foods || data.foods.length === 0) {
+                console.warn(`⚠️ No nutrition data found for "${foodName}"`);
+                return { calories: "N/A", protein: "N/A", carbs: "N/A", fats: "N/A", image: "/placeholder.jpg" };
+            }
+
+            return {
+                calories: data.foods[0].nf_calories ?? "N/A",
+                protein: data.foods[0].nf_protein ?? "N/A",
+                carbs: data.foods[0].nf_total_carbohydrate ?? "N/A",
+                fats: data.foods[0].nf_total_fat ?? "N/A",
+                image: data.foods[0].photo?.highres || data.foods[0].photo?.thumb || "/placeholder.jpg"
+            };
+        } catch (error) {
+            console.error("❌ Error fetching food details:", error);
+            return { calories: "N/A", protein: "N/A", carbs: "N/A", fats: "N/A", image: "/placeholder.jpg" };
         }
     };
 
@@ -65,7 +126,7 @@ export default function FoodSelector({ onSelectDiet }) {
                 placeholder="Search for a food..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                onBlur={() => setTimeout(() => setFoods([]), 200)}
+                onBlur={() => setTimeout(() => setFoods([]), 20000000)}
                 className="food-search"
             />
 
@@ -73,25 +134,26 @@ export default function FoodSelector({ onSelectDiet }) {
 
             {/* Food List */}
             {foods.length > 0 && (
-                <div className="food-dropdown-container">
+                <div className={styles["food-dropdown-container"]}>
                     {foods.map((food, index) => (
                         <div
                             key={index}
-                            className="food-dropdown"
+                            className={styles["food-dropdown"]}
                             onClick={() => onSelectDiet(food)}
                         >
-                            {/* Food Image */}
+                            {/* Image */}
                             <img
-                                src={food.photo?.thumb || "/placeholder.jpg"}
+                                src={food.photo || "/placeholder.jpg"}
                                 alt={food.food_name}
-                                className="food-image"
+                                className={styles["food-image"]}
                             />
 
                             {/* Food Details */}
-                            <div className="food-info">
-                                <span className="food-name">{capitalizeWords(food.food_name)}</span>
-                                {food.brand_name && <span className="food-brand"> ({food.brand_name})</span>}
-                                <span className="food-calories"> {food.nf_calories} kcal</span>
+                            <div className={styles["food-info"]}>
+                                <span className={styles["food-name"]}>{capitalizeWords(food.food_name)}</span>
+                                {food.brand_name && <span className={styles["food-brand"]}> ({food.brand_name})</span>}
+                                <span className={styles["food-calories"]}> {food.nf_calories} kcal</span>
+                                <span className={styles["food-protein"]}> {food.nf_protein}g protein</span>
                             </div>
                         </div>
                     ))}

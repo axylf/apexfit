@@ -1,0 +1,67 @@
+.food-dropdown-container {
+    width: 100%;
+    max-width: 500px;
+    background: #0F0F0F;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+    display: flex;       /* Enables Flexbox */
+    flex-direction: column; /* Stack items vertically */
+    align-items: left; /* Centers items horizontally */
+    justify-content: center; /* Centers items vertically (optional) */
+    margin: 5px auto; /* Centers the container horizontally */
+}
+
+/* Individual Food Item */
+.food-dropdown {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+}
+
+.food-dropdown:hover {
+    background: #4A4A4A; /* Light Gray */
+}
+
+/* Food Info Styling */
+.food-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* Food Name */
+.food-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Food Brand */
+.food-brand {
+    font-size: 14px;
+    color: #B7B5B8; /* Light gray */
+}
+
+/* Food Calories */
+.food-calories {
+    font-size: 14px;
+    color: #FF5733; /* Orange-Red for visibility */
+}
+
+.food-protein {
+    font-size: 14px;
+    color: #4CAF50; /* Green for health-related info */
+}
+
+/* Food Image */
+.food-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    margin-right: 10px;
+    object-fit: cover;
+}
