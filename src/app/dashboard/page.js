@@ -22,6 +22,13 @@ export default function Dashboard() {
                 <Link href="/dashboard/workout">Workout</Link>
             </div>
 
+            {/* Buttons Bar */}
+            <div className={styles.buttonBar}>
+                <Link href="/dashboard" className={styles.barButton}>Home</Link>
+                <Link href="/dashboard/diet" className={styles.barButton}>Diet</Link>
+                <Link href="/dashboard/workout" className={styles.barButton}>Workout</Link>
+            </div>
+
             {/* Profile and Calorie Box Container */}
             <div className={styles.profileCalorieContainer}>
                 {/* Profile Box */}
