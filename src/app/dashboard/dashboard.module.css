@@ -38,7 +38,7 @@
     width: 50%; /* Adjust the width as needed */
     padding: 10px 0;
     margin-bottom: 20px;
-    border-radius: 8px; /* Optional: Add rounded corners */
+    margin-top: -40px;
     background-color: transparent; /* Remove the black background */
     gap: 10px; /* Add gap between buttons */
 }
@@ -48,17 +48,25 @@
     font-size: 22px; /* Larger font size */
     font-weight: bold;
     color: #ffffff;
-    padding: 10px 15px; /* Reduced padding */
+    padding: 8px 15px; /* Reduced padding */
     background-color: #4280c7;
     transition: background-color 0.3s ease, transform 0.2s ease;
     flex: 1; /* Allow buttons to take up equal space */
     text-align: center;
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 6px; /* Rounded corners */
 }
 
 .barButton:hover {
     background-color: #f54c4c;
     transform: translateY(-2px);
+}
+
+.barDivider {
+    width: 50%;
+    border: none;
+    height: 2px;
+    background-color: black;
+    margin: 10px 0;
 }
 
 .weeklyNutrition {
@@ -69,6 +77,13 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 700px; /* Set the width of the weekly nutrition box */
+    text-align: center;
+}
+
+.weeklyNutrition h2 {
+    margin: 2%;
+    margin-bottom: 4%;
+    text-align: center;
 }
 
 .weekDays {

@@ -14,20 +14,15 @@ export default function Dashboard() {
 
     return (
         <div className={styles.dashboardContainer}>
-            {/* Header Section */}
             <NavBar />
-            <div className={styles.navLinks}>
-                <Link href="/dashboard">Home</Link>
-                <Link href="/dashboard/diet">Diet</Link>
-                <Link href="/dashboard/workout">Workout</Link>
-            </div>
-
             {/* Buttons Bar */}
             <div className={styles.buttonBar}>
                 <Link href="/dashboard" className={styles.barButton}>Home</Link>
                 <Link href="/dashboard/diet" className={styles.barButton}>Diet</Link>
                 <Link href="/dashboard/workout" className={styles.barButton}>Workout</Link>
             </div>
+
+            <hr className={styles.barDivider} />
 
             {/* Profile and Calorie Box Container */}
             <div className={styles.profileCalorieContainer}>
