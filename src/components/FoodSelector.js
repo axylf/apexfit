@@ -6,6 +6,7 @@ export default function FoodSelector({ onSelectDiet }) {
     const [foods, setFoods] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const API_ID = process.env.NEXT_PUBLIC_NUTRITIONIX_APP_ID; // Securely load API ID
     const API_KEY = process.env.NEXT_PUBLIC_NUTRITIONIX_API_KEY; // Securely load API key
 
     useEffect(() => {
@@ -26,12 +27,12 @@ export default function FoodSelector({ onSelectDiet }) {
         try {
             console.log("Fetching foods for:", query);
             const response = await fetch(
-                "https://trackapi.nutritionix.com/v2/search/instant?limit=1000",
+                `https://trackapi.nutritionix.com/v2/search/instant?query=${query}`,
                 {
                     method: "GET",
                     headers: {
-                        "X-Nutritionix-Key": API_KEY,
-                        "X-Nutritionix-Host": "https://trackapi.nutritionix.com/",
+                        "x-app-id": API_ID,
+                        "x-app-key": API_KEY,
                     },
                 }
             );
@@ -39,14 +40,11 @@ export default function FoodSelector({ onSelectDiet }) {
             if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
 
             const data = await response.json();
-            const cleanedQuery = query.toLowerCase().replace(/\s+/g, "");
-            const filteredDiets = data.filter(({ name }) =>
-                name.toLowerCase().replace(/\s+/g, "").includes(cleanedQuery)
-            );
+            const filteredFoods = data.common.slice(0, 5); // Get first 5 results
 
-            setFoods(filteredFoods.slice(0, 5)); // Show top 5 results
+            setFoods(filteredFoods);
         } catch (error) {
-            console.error("Error fetching Foods:", error);
+            console.error("Error fetching foods:", error);
         } finally {
             setLoading(false);
         }
@@ -58,8 +56,8 @@ export default function FoodSelector({ onSelectDiet }) {
     };
 
     return (
-        <div className="exercise-selector">
-            <h2>Search for an Food</h2>
+        <div className="food-selector">
+            <h2>Search for a Food Item</h2>
 
             {/* Search Input */}
             <input
@@ -68,31 +66,32 @@ export default function FoodSelector({ onSelectDiet }) {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onBlur={() => setTimeout(() => setFoods([]), 200)}
-                className="exercise-search"
+                className="food-search"
             />
 
             {loading && <p className="loading-text">Loading...</p>}
 
-            {/* Exercise List */}
+            {/* Food List */}
             {foods.length > 0 && (
-                <div className="exercise-dropdown-container">
+                <div className="food-dropdown-container">
                     {foods.map((food, index) => (
                         <div
                             key={index}
-                            className="exercise-dropdown"
-                            onClick={() => onSelectFood(food)}
+                            className="food-dropdown"
+                            onClick={() => onSelectDiet(food)}
                         >
-                            {/* Image (Check for static image, otherwise use GIF) */}
+                            {/* Food Image */}
                             <img
-                                src={food.image || food.gifUrl}
-                                alt={food.name}
-                                className="exercise-image"
+                                src={food.photo?.thumb || "/placeholder.jpg"}
+                                alt={food.food_name}
+                                className="food-image"
                             />
 
-                            {/* Exercise Details */}
-                            <div className="exercise-info">
-                                <span className="exercise-name">{capitalizeWords(food.name)}</span>
-                                <span className="exercise-bodyPart"> (<strong>{capitalizeWords(food.bodyPart)}</strong>)</span>
+                            {/* Food Details */}
+                            <div className="food-info">
+                                <span className="food-name">{capitalizeWords(food.food_name)}</span>
+                                {food.brand_name && <span className="food-brand"> ({food.brand_name})</span>}
+                                <span className="food-calories"> {food.nf_calories} kcal</span>
                             </div>
                         </div>
                     ))}

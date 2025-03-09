@@ -1,0 +1,51 @@
+/* Main container for the page */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+    background: linear-gradient(135deg, #1F1E24, #0F0F0F); /* Gradient background */
+    color: white; /* Match your text color */
+}
+
+/* Content area */
+.content {
+    flex: 1; /* Allow the content to grow and push the footer down */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    text-align: center; /* Center text */
+    padding: 20px; /* Add some padding */
+}
+
+/* Centered Text */
+.centeredText {
+    font-size: 1.5rem; /* Adjust font size */
+    color: #B7B5B8; /* Light gray text */
+    max-width: 600px; /* Limit the width for better readability */
+    line-height: 1.6; /* Improve line spacing */
+}
+
+/* Create Meal Plan Button */
+.createButton {
+    background-color: #c74f42;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Add spacing above the button */
+}
+
+    .createButton:hover {
+        background-color: #a83e32;
+    }
+
+/* Footer styling */
+.footer {
+    padding: 20px;
+    text-align: center;
+    margin-top: auto; /* Push the footer to the bottom */
+}
