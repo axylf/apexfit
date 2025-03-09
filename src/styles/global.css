@@ -469,9 +469,36 @@ footer ul li a:hover {
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Ensure input text is always white */
+input {
+    color: white !important; /* Keeps text visible even when not focused */
+    background-color: #1F1E24; /* Matches dark background */
+    border: 1px solid #4280c7; /* Keeps the border blue */
+}
+
 input:focus {
     outline: none; /* Removes default browser focus outline */
     border: 2px solid #4280c7; /* Optional: Custom border when focused */
     background: #1F1E24; /* Optional: Match background */
     color: white; /* Ensure text is visible */
 }
+
+    /* Ensure the placeholder text is visible */
+    input::placeholder {
+        color: #B7B5B8; /* Light gray for placeholder text */
+        opacity: 1;
+    }
+
+/* Remove number input spinners globally */
+input[type="number"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: textfield !important;
+}
+
+    /* Specifically remove up/down arrows */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none !important;
+        display: none !important;
+        margin: 0 !important;
+    }

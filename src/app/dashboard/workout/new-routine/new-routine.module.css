@@ -28,7 +28,7 @@
     }
 
     .selected-exercises .exercise-card:nth-child(even) {
-        background-color: #1F1E24;
+        background-color: #0F0F0F;
         color: white;
     }
 
@@ -45,8 +45,17 @@
 
 /* Exercise Header */
 .exercise-header {
+    display: flex;
+    align-items: center;
     text-align: center;
+    gap: 10px;
     margin-bottom: 10px;
+}
+
+.exercise-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 20px;
 }
 
 /* Exercise Name Formatting */
@@ -58,26 +67,41 @@
 
 /* Exercise Table */
 .exercise-table {
+    table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
 }
 
-    .exercise-table th,
-    .exercise-table td {
-        padding: 8px;
-        text-align: center;
-    }
+.delete-column {
+    width: 20px; /* Set a fixed width */
+    text-align: center; /* Center the button */
+}
 
-    /* Input Fields */
-    .exercise-table input {
-        width: 60px;
-        padding: 5px;
-        text-align: center;
-        font-size: 16px;
-        background: transparent;
-        border: none;
-        color: white;
-    }
+.exercise-table tbody tr {
+    border-bottom: 2px solid #292929; /* Darker separator line */
+}
+
+/* Add a special style for the second set row */
+.exercise-table tbody tr:nth-child(2) {
+    background-color: #1A1A1A; /* Darker row color for contrast */
+}
+
+.exercise-table th,
+.exercise-table td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* Input Fields */
+.exercise-table input {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    font-size: 16px;
+    background: transparent;
+    border: none;
+    color: white;
+}
 
 .exercise-content {
     display: flex;
@@ -85,20 +109,26 @@
     gap: 15px; /* Add spacing between the image and text */
 }
 
-.exercise-image {
-    width: 80px; /* Make it smaller */
-    height: 80px;
-    border-radius: 5px; /* Optional: rounded corners */
-}
-
 /* Delete Set Button */
 .delete-set-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     color: red;
-    font-size: 20px;
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
 }
+
+/* Ensure the last column doesn't shrink table */
+.exercise-table td:last-child {
+    width: 40px; /* Fixed width for delete button column */
+    text-align: center;
+}
+
 
 /* Add Set Button */
 .add-set-btn {
@@ -108,7 +138,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
     .add-set-btn:hover {
@@ -125,4 +155,14 @@
     font-size: 16px;
     cursor: pointer;
     margin-top: 20px;
+}
+
+.no-spinner input[type="number"]::-webkit-outer-spin-button,
+.no-spinner input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+.no-spinner input[type="number"] {
+    -moz-appearance: textfield !important;
 }
