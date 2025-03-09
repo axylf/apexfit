@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { db, auth } from "../../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import NavBar from "../../../components/NavBar"; // Corrected import path
+import Footer from "../../../components/Footer"; // Corrected import path
+import styles from "./workout.module.css"; // Import the CSS module
 
 export default function WorkoutPage() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -34,29 +37,25 @@ export default function WorkoutPage() {
     }, [currentUser]);
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Workout Routines</h1>
+        <div className={styles.container}>
+            {/* Add NavBar at the top */}
+            <NavBar />
 
-            <Link href="/dashboard/workout/new-routine">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded mb-4">
-                    Create Routine
-                </button>
-            </Link>
+            {/* Main Content */}
+            <div className={styles.content}>
+                {/* Centered Text with Button */}
+                <div className={styles.centeredText}>
+                    <p>Want to start creating your own personalized routine?</p>
+                    <Link href="/dashboard/workout/new-routine">
+                        <button className={styles.createButton}>Create Routine</button>
+                    </Link>
+                </div>
+            </div>
 
-            {routines.length > 0 ? (
-                <ul>
-                    {routines.map((routine) => (
-                        <li key={routine.id} className="border p-4 mb-2">
-                            <Link href={`/dashboard/workout/${routine.id}`} className="text-xl font-semibold cursor-pointer hover:underline">
-                                {routine.name}
-                            </Link>
-                            <p>{routine.exercises.length} exercises</p>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No routines saved yet.</p>
-            )}
+            {/* Add Footer at the bottom */}
+            <footer className={styles.footer}>
+                <Footer />
+            </footer>
         </div>
     );
 }
